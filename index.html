@@ -15,15 +15,18 @@
 </head>
 <body>
   <main>
-    <form id="form">
-      <input id="zip" type="text" placeholder="Enter US Zip Code (e.g. 10001)" required pattern="[0-9]{5}">
-      <button>Get Weather</button>
-    </form>
-
     <section id="output" class="hidden">
-      <h2 id="location">Location</h2>
+      <div id="location-container">
+        <h2 id="location">Location</h2>
+        <div id="zip-entry" class="hidden">
+          <form id="form">
+            <input id="zip" type="text" placeholder="ZIP" required pattern="[0-9]{5}" maxlength="5">
+            <button type="submit">✓</button>
+          </form>
+        </div>
+      </div>
       <div class="temp-container">
-        <div class="temp-value"></div>
+        <div id="temp-display" class="temp-value">--°</div>
       </div>
     </section>
   </main>

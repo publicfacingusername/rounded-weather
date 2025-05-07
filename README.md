@@ -1,3 +1,5 @@
 # 20250506
 
-## Run with `wrangler dev --remote`
+## How to Run
+1. `cd worker`
+2. `wrangler dev --remote`
