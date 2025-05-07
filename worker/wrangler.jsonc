@@ -1,0 +1,18 @@
+{
+	// Worker name
+	"name": "weather-proxy",
+  
+	// Required on every publish
+	"compatibility_date": "2025-05-06",
+  
+	// Default: deploy to <name>.<account>.workers.dev
+	"workers_dev": true,
+  
+	// Uncomment if you later bind a custom subdomain
+	// "route": "https://api.yourdomain.com/weather*",
+	// "zone_id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+
+	// Entry point to the Worker script
+	"main": "src/index.ts"
+}
+  
