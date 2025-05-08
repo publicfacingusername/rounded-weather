@@ -6,7 +6,8 @@ const OFFLINE = [
   '/app.js',
   '/manifest.json',
   '/icons/icon-180.png',
-  '/icons/icon-512.png'
+  '/icons/icon-512.png',
+  '/favicon.ico'
 ];
 
 self.addEventListener('install', event =>
