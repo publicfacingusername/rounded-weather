@@ -98,56 +98,61 @@ document.addEventListener('DOMContentLoaded', () => {
   // Update the temperature display based on current state
   function updateTemperatureDisplay() {
     if (!currentWeatherData) return;
-    
+
     const realFeel = currentWeatherData.main.feels_like;
     const round5 = Math.round(realFeel / 5) * 5;
-    const weatherCondition = currentWeatherData.weather[0].main;
     const weatherDescription = currentWeatherData.weather[0].description;
-    
+
     // Capitalize first letter of each word in description
     const formattedDescription = weatherDescription
       .split(' ')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
-    
+
+    let tempNumberContent;
+    let conditionTextContent = ''; // Default to empty
+
     if (showingRealFeel) {
-      // Show the actual real feel and weather condition
-      tempDisplay.innerHTML = `
-        <div class="detail-temp">${realFeel.toFixed(1)}°</div>
-        <div class="detail-condition">${formattedDescription}</div>
-      `;
+      tempNumberContent = realFeel.toFixed(1);
+      conditionTextContent = formattedDescription;
       tempDisplay.classList.add('showing-real-feel');
+      // Ensure other color classes are removed if any were present
+      tempDisplay.classList.remove('temp-neutral', 'temp-higher', 'temp-higher-strong', 'temp-lower', 'temp-lower-strong');
     } else {
-      // Show the rounded temperature
-      tempDisplay.innerHTML = `${round5}°`;
+      tempNumberContent = round5;
+      // conditionTextContent remains empty
+
       tempDisplay.classList.remove('showing-real-feel');
+      // Reset specific color classes before applying the correct one
+      tempDisplay.classList.remove('temp-neutral', 'temp-higher', 'temp-higher-strong', 'temp-lower', 'temp-lower-strong');
       
-      // Reset all temperature classes
-      tempDisplay.className = 'temp-value';
-      
-      // Calculate absolute difference
       const diff = Math.abs(realFeel - round5);
-      
-      // Determine temperature class based on difference magnitude
       if (diff < 1) {
-        // Within 1 degree - green
         tempDisplay.classList.add('temp-neutral');
       } else if (realFeel > round5) {
-        // Real feel is higher than rounded
         if (diff >= 2.5) {
-          tempDisplay.classList.add('temp-higher-strong'); // Strong red for big difference
+          tempDisplay.classList.add('temp-higher-strong');
         } else {
-          tempDisplay.classList.add('temp-higher'); // Light red for small difference
+          tempDisplay.classList.add('temp-higher');
         }
       } else {
-        // Real feel is lower than rounded
         if (diff >= 2.5) {
-          tempDisplay.classList.add('temp-lower-strong'); // Strong blue for big difference
+          tempDisplay.classList.add('temp-lower-strong');
         } else {
-          tempDisplay.classList.add('temp-lower'); // Light blue for small difference
+          tempDisplay.classList.add('temp-lower');
         }
       }
     }
+
+    // Consistent inner HTML structure
+    tempDisplay.innerHTML = `
+      <div class="temp-primary">
+        <span class="temp-number">${tempNumberContent}°</span>
+      </div>
+      <div class="temp-secondary">
+        <span class="condition-text">${conditionTextContent}</span>
+      </div>
+    `;
   }
 
   // Fetch weather data for a zip code

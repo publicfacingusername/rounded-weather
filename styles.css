@@ -88,8 +88,8 @@ main {
   transform: translateX(-50%);
   width: auto;
   background-color: white;
-  padding: 0.15rem;
-  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   animation: fadeIn 0.2s ease-out;
   z-index: 10;
@@ -103,14 +103,14 @@ main {
 /* Form styling */
 form {
   display: flex;
-  gap: 0.25rem;
+  gap: 0.5rem;
   align-items: center;
 }
 
 input {
-  width: 3.5rem;
-  padding: 0.25rem 0.4rem;
-  font-size: 0.8rem;
+  width: 4.5rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 1.1rem;
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #f8f9fa;
@@ -118,12 +118,12 @@ input {
 }
 
 button {
-  width: 1.4rem;
-  height: 1.4rem;
+  width: 1.6rem;
+  height: 1.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   background-color: #0070f3;
   color: white;
   border: none;
@@ -160,12 +160,10 @@ button:hover {
 }
 
 .temp-value {
-  font-size: 5.5rem;
-  font-weight: 700;
   padding: 1rem;
   border-radius: 16px;
-  min-width: 160px;
-  min-height: 140px;
+  width: 220px;
+  height: 200px;
   cursor: pointer;
   transition: all 0.3s ease;
   user-select: none;
@@ -173,6 +171,7 @@ button:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .temp-value:hover {
@@ -181,6 +180,40 @@ button:hover {
 
 .temp-value:active {
   transform: scale(0.98);
+}
+
+/* New structure for temp display */
+.temp-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.temp-number {
+  font-size: 5.5rem;
+  font-weight: 700;
+  line-height: 1; /* Crucial for stable height of the number itself */
+}
+
+.temp-secondary {
+  width: 100%;
+  text-align: center;
+  min-height: 1.5rem; /* Reserves space for condition text, (1.2rem * 1.2 line-height) = 1.44rem. 1.5rem is safe. */
+  /* Adding a little top margin for spacing if text is present */
+}
+
+.temp-secondary:not(:empty) {
+    margin-top: 0.25rem;
+}
+
+.condition-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.2;
+  max-width: 200px;
+  overflow-wrap: break-word;
+  display: inline-block;
 }
 
 /* Loading state */
@@ -197,48 +230,36 @@ button:hover {
   100% { opacity: 0.5; }
 }
 
-/* Real-feel display */
+/* Real-feel display - old .detail-temp and .detail-condition are replaced */
 .showing-real-feel {
-  background-color: #333;
-  color: white;
+  background-color: #333; /* This is correct for the .temp-value box */
+  color: white; /* This is correct for the .temp-value box */
 }
 
-.detail-temp {
-  font-size: 4rem;
-  line-height: 1;
-  margin-bottom: 0.5rem;
-}
-
-.detail-condition {
-  font-size: 1.2rem;
-  font-weight: 500;
-  line-height: 1.2;
-}
-
-/* Temperature color indicators with more nuance */
+/* Temperature color indicators with more muted colors */
 .temp-higher-strong {
   color: #fff;
-  background-color: rgba(235, 51, 35, 0.85); /* Deeper red for larger rounding down */
+  background-color: rgba(230, 150, 40, 0.65); /* Muted orange for larger rounding down */
 }
 
 .temp-higher {
   color: #fff;
-  background-color: rgba(255, 77, 79, 0.75); /* Lighter red for smaller rounding down */
+  background-color: rgba(230, 170, 80, 0.55); /* Lighter muted orange for smaller rounding down */
 }
 
 .temp-neutral {
   color: #fff;
-  background-color: rgba(76, 187, 100, 0.75); /* Green for minimal rounding (< 1 degree) */
+  background-color: rgba(100, 170, 120, 0.55); /* Muted green for minimal rounding (< 1 degree) */
 }
 
 .temp-lower {
   color: #fff;
-  background-color: rgba(56, 128, 255, 0.75); /* Lighter blue for smaller rounding up */
+  background-color: rgba(100, 150, 200, 0.55); /* Muted blue for smaller rounding up */
 }
 
 .temp-lower-strong {
   color: #fff;
-  background-color: rgba(30, 90, 205, 0.85); /* Deeper blue for larger rounding up */
+  background-color: rgba(80, 120, 170, 0.65); /* Deeper muted blue for larger rounding up */
 }
 
 .error {
