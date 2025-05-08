@@ -1,6 +1,6 @@
 // Configure endpoint based on environment
 // When using wrangler dev --remote, the worker is deployed to a temporary subdomain
-const endpoint = 'https://roundedweather.com/api';
+const endpoint = 'https://api.roundedweather.com';
 
 // Wait for DOM to fully load before running any code
 document.addEventListener('DOMContentLoaded', () => {

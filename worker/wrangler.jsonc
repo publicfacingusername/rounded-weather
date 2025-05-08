@@ -11,7 +11,7 @@
 	// Routes array
 	"routes": [
 		{
-		"pattern": "roundedweather.com/api/*",
+		"pattern": "api.roundedweather.com/*",
 		"zone_name": "roundedweather.com"
 		}
 	],

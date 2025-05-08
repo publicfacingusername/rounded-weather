@@ -1,19 +1,35 @@
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
-		// Add CORS headers to all responses
+		const allowedOrigin = 'https://roundedweather.com';
 		const corsHeaders = {
-			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Origin': allowedOrigin,
 			'Access-Control-Allow-Methods': 'GET, OPTIONS',
 			'Access-Control-Allow-Headers': 'Content-Type',
 		};
 
 		// Handle OPTIONS requests for CORS preflight
 		if (request.method === 'OPTIONS') {
-			return new Response(null, {
-				status: 204,
-				headers: corsHeaders,
-			});
+			// Ensure the Origin header matches our allowed origin for preflight
+			if (request.headers.get('Origin') === allowedOrigin) {
+				return new Response(null, {
+					status: 204,
+					headers: corsHeaders,
+				});
+			} else {
+				// Origin not allowed for preflight
+				return new Response('OPTIONS request from disallowed origin', { status: 403 });
+			}
 		}
+
+		// Optional: Referer check for non-OPTIONS requests
+		// const referer = request.headers.get('Referer');
+		// if (!referer || !referer.startsWith(allowedOrigin + '/')) {
+		//   // Consider how strict you want to be. Could be spoofed.
+		//   // return new Response(JSON.stringify({ error: 'Invalid referer' }), {
+		//   //   status: 403,
+		//   //   headers: { ...corsHeaders, 'content-type': 'application/json' }
+		//   // });
+		// }
 		
 		const url = new URL(request.url);
 		const zipCode = url.searchParams.get('zip') ?? '10001'; // Default to New York City
@@ -43,12 +59,14 @@ export default {
 				`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${env.OPENWEATHER_KEY}`
 			);
 			
+			// Forward the response from OpenWeatherMap, adding our CORS headers
+			const responseHeaders = { ...weatherResponse.headers, ...corsHeaders, 'content-type': 'application/json' };
+			// Ensure existing headers like content-type from weatherResponse are not overwritten by corsHeaders default if not specific enough
+			// For this specific API, we know it is JSON, so explicitly setting content-type after spreading is fine.
+			
 			return new Response(weatherResponse.body, {
 				status: weatherResponse.status,
-				headers: { 
-					'content-type': 'application/json',
-					...corsHeaders 
-				}
+				headers: responseHeaders
 			});
 		} catch (error) {
 			return new Response(JSON.stringify({ error: 'Failed to fetch weather data' }), {
