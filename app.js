@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const zipEntry = document.getElementById('zip-entry');
   const tempDisplay = document.getElementById('temp-display');
   const locationEl = document.getElementById('location');
-  const locationContainer = document.getElementById('location-container');
 
   // State variables
   let currentWeatherData = null;
