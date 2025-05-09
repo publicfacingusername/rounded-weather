@@ -228,19 +228,13 @@ button:hover {
   opacity: 0.7;
   background-color: #f8f9fa;
   color: #888;
-  animation: pulse 1.5s infinite;
 }
 
-@keyframes pulse {
-  0% { opacity: 0.5; }
-  50% { opacity: 0.8; }
-  100% { opacity: 0.5; }
-}
 
 /* Real-feel display - old .detail-temp and .detail-condition are replaced */
 .showing-real-feel {
-  background-color: #333; /* This is correct for the .temp-value box */
-  color: white; /* This is correct for the .temp-value box */
+  background-color: #333;
+  color: white;
 }
 
 /* Temperature color indicators with more muted colors */
